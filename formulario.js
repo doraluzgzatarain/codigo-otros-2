@@ -1,41 +1,62 @@
-var formulario = document.querySelector("#form")
+//DRESCRIPTION: Web app to create the party list of guests. Also, allows you to add and eliminate guests.
 
-formulario.onsubmit = function(e) {
+var formData = document.querySelector(".formData");//Changed #formulario to .formData, base on the class name
+var errorAlert = document.getElementById("errorAlert");
+var errorAlertText = document.getElementById("errorAlertText");
 
-  e.prevent();
-  
-  var n = formulario.elements[0]
-  var e = formulario.elements[1]
-  var na = formulario.elements[2]
+let listError = " ";
 
-  var nombre = n.value
-  var edad = e.value
+formData.onsubmit = function (event) {
+  event.preventDefault();  //Add preventDefault();
+  console.log("test");
+  var n = formData.elements[0];
+  var e = formData.elements[1];
+  var na = formData.elements[2];
 
-  var i = na.selectedIndex
+  var nombre = n.value;
+  var edad = e.value;
+
+  errorAlertText.innerHTML = "";    //Add alert
+  errorAlert.style.display = "none";
+  let listError = "<ul>";
+
+  var i = na.selectedIndex;
   var nacionalidad = na.options[i].value
   console.log(nombre, edad)
   console.log(nacionalidad)
 
+
   if (nombre.length === 0) {
-    n.classList.add("error")
+    n.classList.add("error");
+    errorAlert.style.display = "block";
+    listError += "<li> Se debe escribir un nombre válido.</li>";   // Show when you have to write a correct name
+
   }
-  if (edad < 18 || edad > 120) {
+  if (edad < 18 || edad > 120) {  
     e.classList.add("error")
+    errorAlert.style.display = "block";
+    listError += "<li> Debes ser mayor de edad y/o escribir una edad válida.</li>";   //Show when you have to write a correct age
   }
 
 if (nombre.length > 0 
   && (edad > 18 
     && edad < 120) ) {
-  agregarInvitado(nombre, edad, nacionalidad)
+  agregarInvitado(nombre, edad, nacionalidad);
+  n.value = "";   // Clear inputs when you add guests
+  e.value = "";
   }
+
+  listError += "</ul>";
+  errorAlertText.insertAdjacentHTML("beforeend", listError);
+
 }
 
-var botonBorrar = document.createElement("button")
-botonBorrar.textContent = "Eliminar invitado"
-botonBorrar.id = "boton-borrar"
-var corteLinea = document.createElement("br")
-document.body.appendChild(corteLinea)
-document.body.appendChild(botonBorrar);
+// var botonBorrar = document.createElement("button")    //Repeat button Eliminar-Invitado
+// botonBorrar.textContent = "Eliminar invitado"
+// botonBorrar.id = "boton-borrar"
+// var corteLinea = document.createElement("br")
+// document.body.appendChild(corteLinea)
+// document.body.appendChild(botonBorrar);
 
 function agregarInvitado(nombre, edad, nacionalidad) {
 
@@ -55,20 +76,20 @@ function agregarInvitado(nombre, edad, nacionalidad) {
 var lista = document.getElementById("lista-de-invitados")
 
 var elementoLista = document.createElement("div")
-elementoLista.classList.added("elemento-lista")
+  elementoLista.classList.add("elemento-lista")   //Modified added to add
 lista.appendChild(elementoLista)
 
-var spanNombre = document.createElement("span")
-var inputNombre = document.createElement("input")
-var espacio = document.createElement("br")
-spanNombre.textContent = "Nombre: "
-inputNombre.value = nombre 
-elementoLista.appendChild(spanNombre)
-elementoLista.appendChild(inputNombre)
-elementoLista.appendChild(espacio)
+// var spanNombre = document.createElement("span")       // Repeat var of the name
+// var inputNombre = document.createElement("input")
+// var espacio = document.createElement("br")
+// spanNombre.textContent = "Nombre: "
+// inputNombre.value = nombre
+// elementoLista.appendChild(spanNombre)
+// elementoLista.appendChild(inputNombre)
+// elementoLista.appendChild(espacio)
 
 function crearElemento(descripcion, valor) {
-var spanNombre = document.createElement("span")
+  var spanNombre = document.createElement("span")      //This part show the name
 var inputNombre = document.createElement("input")
 var espacio = document.createElement("br")
 spanNombre.textContent = descripcion + ": "

@@ -21,6 +21,11 @@ body {
   background-color: red;
 }
 
+#errorAlert{    /* Add style to div alerts */
+  margin: 2rem;
+  width: 20rem;
+}
+
 .elemento-lista {
   color: #4b1248;
   font-family: Verdana;
